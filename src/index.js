@@ -11,6 +11,9 @@ import App from './App';
 import RegistrationPage from './pages/RegistrationPage/RegistrationPage';
 import ResetPasswordPage from './pages/ResetPasswordPage/ResetPasswordPage';
 import AddProductPage from './pages/AddProductPage/AddProductPage';
+import AdminProductDetailsPage from './pages/AdminProductDetailsPage/AdminProductDetailsPage';
+import CustomerProductDetailsPage from './pages/CustomerProductDetailsPage/CustomerProductDetailsPage';
+
 
 ReactDOM.render(
   <React.StrictMode>
@@ -19,7 +22,9 @@ ReactDOM.render(
         <Route exact path="/" component={App} />
         <Route path="/register" component={RegistrationPage} />
         <Route path="/reset-password" component={ResetPasswordPage} />
-        <Route path="/addproduct" component={AddProductPage}/>
+        <Route path="/admin/addproduct" component={AddProductPage}/>
+        <Route path="/admin/product/{prodid}" component={AdminProductDetailsPage}/>
+        <Route path="/customer/product/{prodid}" component={CustomerProductDetailsPage}/>
       </Switch>
     </Router>
   </React.StrictMode>,
