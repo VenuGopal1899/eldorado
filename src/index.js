@@ -10,6 +10,7 @@ import 'bootstrap/dist/js/bootstrap.min.js';
 import App from './App';
 import RegistrationPage from './pages/RegistrationPage/RegistrationPage';
 import ResetPasswordPage from './pages/ResetPasswordPage/ResetPasswordPage';
+import AddProductPage from './pages/AddProductPage/AddProductPage';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -18,6 +19,7 @@ ReactDOM.render(
         <Route exact path="/" component={App} />
         <Route path="/register" component={RegistrationPage} />
         <Route path="/reset-password" component={ResetPasswordPage} />
+        <Route path="/addproduct" component={AddProductPage}/>
       </Switch>
     </Router>
   </React.StrictMode>,
