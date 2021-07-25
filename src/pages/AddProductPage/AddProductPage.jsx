@@ -3,7 +3,7 @@ import AddProductForm from '../../components/AddProductForm/AddProductForm';
 import Navigationbar from '../../components/Navigationbar/Navigationbar';
 
 
-function AddProductPage(props) {
+const AddProductPage=(props)=>{
     return (
         <div>
             <Navigationbar/>

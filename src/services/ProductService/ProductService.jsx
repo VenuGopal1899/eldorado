@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-function addProduct(payload){
+const addProduct=(payload)=>{
     var imageLinksList=payload.imageLinks.split(',').map(link=>link.trim());
     var videoLinksList=payload.videoLinks.split(',').map(link=>link.trim());
     delete payload.imageLinks;
