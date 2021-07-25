@@ -1,6 +1,6 @@
-### El Dorado
+# El Dorado
 
-##### Hi Everyone, Please follow below conventions during development
+### Hi Everyone, Please follow below conventions during development
 
 1.  Add your components, inside 'components' folder
 2.  Component Naming Convention - Pascal Case (Please refer to existing components)
