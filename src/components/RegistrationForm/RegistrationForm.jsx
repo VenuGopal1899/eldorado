@@ -1,7 +1,7 @@
 import  { useState } from 'react';
 import { Link } from "react-router-dom";
 import { Row, Col, Form, Button } from 'react-bootstrap';
-import { RegistrationService } from '../../services/userservice/RegistrationService';
+import { RegistrationService } from '../../services/UserService/RegistrationService';
 import { PasswordValidation,PasswordHashing } from '../../utils/PasswordUtil';
 
 const RegistrationForm = () => {

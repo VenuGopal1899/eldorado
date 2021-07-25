@@ -1,6 +1,6 @@
 import Select from 'react-select';
 import EldoradoLogo from '../../images/EldoradoLogo.png';
-import Profile from '../../images/Profile.png';
+import Profile from '../../assets/images/Profile.png';
 import { Nav, Navbar, NavDropdown, Button, Form, FormControl } from "react-bootstrap";
 
 const Categories = [

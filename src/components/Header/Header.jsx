@@ -1,4 +1,4 @@
-import EldoradoLogo from '../../images/EldoradoLogo.png';
+import EldoradoLogo from '../../assets/images/EldoradoLogo.png';
 
 const Header = () => {
     return(

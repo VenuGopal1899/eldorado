@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Form, Container, Button } from 'react-bootstrap';
 import TextField from './../TextField/TextField';
 import Creatable from 'react-select/creatable';
-import { addProduct } from './../../services/productservice/ProductService';
+import { addProduct } from './../../services/ProductService/ProductService';
 import './AddProductForm.css';
 
 const categories = [
