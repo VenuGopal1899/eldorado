@@ -1,7 +1,7 @@
 import  { useState } from 'react';
 import { Link } from "react-router-dom";
 import { Row, Col, Form, Button } from 'react-bootstrap';
-import { UserRegisterService } from '../../Context/API/RegistrationService';
+import { RegistrationService } from '../../services/userservice/RegistrationService';
 import { PasswordValidation,PasswordHashing } from '../../utils/PasswordUtil';
 
 const RegistrationForm = () => {
@@ -52,10 +52,10 @@ const RegistrationForm = () => {
                 setRegister(true);
                 const mail = user.mail;
                 const hashedPassword = PasswordHashing(user.password);
-                console.log(mail, hashedPassword);
+                // console.log(mail, hashedPassword);
                 var data = { username: mail, password: hashedPassword };
-                console.log(data);
-                UserRegisterService(data);
+                // console.log(data);
+                RegistrationService(data);
             }
         }
     }
@@ -112,7 +112,7 @@ const RegistrationForm = () => {
                 </h6>
             </Col>
         </Row>
-            </div >    
+            </div >
      );
 }
 

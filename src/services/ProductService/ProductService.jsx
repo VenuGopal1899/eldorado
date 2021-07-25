@@ -6,7 +6,7 @@ const addProduct=(payload)=>{
     delete payload.imageLinks;
     delete payload.videoLinks;
     payload={...payload,imageLinksList,videoLinksList};
-    console.log(JSON.stringify(payload));
+    // console.log(JSON.stringify(payload));
     const url = 'http://localhost:8082/admin/product';
     return axios.post(url,payload);
 }

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Form, Container, Button } from 'react-bootstrap';
 import TextField from './../TextField/TextField';
 import Creatable from 'react-select/creatable';
-import { addProduct } from './../../services/ProductService/ProductService';
+import { addProduct } from './../../services/productservice/ProductService';
 import './AddProductForm.css';
 
 const categories = [
@@ -87,7 +87,7 @@ const AddProductForm=(props)=> {
                 newErrors.imageLinks = "Invalid Image Link";
             }
         }
-        
+
         if (!newErrors.imageLinks) {
             var imageLinksArray = imageLinks.split(',');
             imageLinksArray = imageLinksArray.map(link => link.trim());
@@ -108,9 +108,9 @@ const AddProductForm=(props)=> {
             videoLinksArray = videoLinksArray.map(link => link.trim());
             videoLinksArray.forEach(link => validateVideoLinks(link));
         }
-            
 
-        
+
+
 
         if (pdfLink) {
             pat = new RegExp(/(http(s?):)([/|.|\w|\s|-])*\.(?:pdf)/i);
