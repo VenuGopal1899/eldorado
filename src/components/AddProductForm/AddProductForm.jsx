@@ -13,18 +13,114 @@ const categories = [
     { label: "Fruits", value: 5 },
     { label: "Miscellaneous", value: 6 }
 ];
-const AddProductForm=(props)=> {
+var isValid = false;
+const digitChecker = (value) => {
+    var pat = new RegExp(/^[0-9\b]+$/);
+    if (!pat.test(value)) {
+        isValid = false;
+        return "Please enter only digits";
+    }
+}
+
+
+const validate = (data) => {
+    const { name, desc, category, price, quantity, imageLinks, videoLinks, pdfLink } = data;
+    const newErrors = {};
+    if (!name) {
+        isValid = false;
+        newErrors.name = "Please enter product name";
+    }
+    if (!desc) {
+        isValid = false;
+        newErrors.desc = "Please enter description for the product";
+    }
+    if (!category) {
+        isValid = false;
+        newErrors.category = "Please enter category of the product";
+    }
+
+    if (!price) {
+        isValid = false;
+        newErrors.price = "Please enter price for the product";
+    }
+
+    if (!quantity) {
+        isValid = false;
+        newErrors.quantity = "Please enter quantity of the product";
+    }
+
+    if (!imageLinks) {
+        isValid = false;
+        newErrors.imageLinks = "Please enter atleast one image link";
+    }
+
+    if (typeof price !== "undefined" && !newErrors.price) {
+        newErrors.price = digitChecker(price);
+
+    }
+    if (typeof quantity !== "undefined" && !newErrors.quantity) {
+
+        newErrors.quantity = digitChecker(quantity);
+    }
+
+
+
+    if (!newErrors.imageLinks) {
+        var imageLinksArray = imageLinks.split(',');
+        imageLinksArray = imageLinksArray.map(link => link.trim());
+        imageLinksArray.forEach(link => validateImageLinks(link,newErrors));
+    }
+
+
+
+    if (videoLinks) {
+        var videoLinksArray = videoLinks.split(',');
+        videoLinksArray = videoLinksArray.map(link => link.trim());
+        videoLinksArray.forEach(link => validateVideoLinks(link,newErrors));
+    }
+
+
+
+
+    if (pdfLink) {
+        var pat = new RegExp(/(http(s?):)([/|.|\w|\s|-])*\.(?:pdf)/i);
+        if (!pat.test(pdfLink)) {
+            isValid = false;
+            newErrors.pdfLink = "Invalid PDF Link";
+        }
+    }
+
+    return newErrors;
+
+}
+
+const validateImageLinks = (link,newErrors) => {
+    var pat = new RegExp(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/i);
+    if (!pat.test(link)) {
+        isValid = false;
+        newErrors.imageLinks = "Invalid Image Link";
+    }
+}
+const validateVideoLinks = (link,newErrors) => {
+    console.log(link);
+    var pat = new RegExp(/^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w-]+\?v=|embed\/|v\/)?)([\w-]+)(\S+)?$/i);
+    if (!pat.test(link)) {
+        isValid = false;
+        newErrors.videoLinks = "Invalid Video Link";
+    }
+}
+const AddProductForm = (props) => {
 
     const [data, setData] = useState({ name: "", desc: "", category: "", price: "", quantity: "", imageLinks: "", videoLinks: "", pdfLink: "" });
     const [errors, setErrors] = useState({});
     const [categoryValue, setCategoryValue] = useState('');
-    const changeHandler=(ce)=>{
+    const changeHandler = (ce) => {
         setData({ ...data, [ce.target.id]: ce.target.value });
-        }
-    var isValid = false;
-    const addHandler=(e)=> {
-         isValid=true;
-        setErrors(validate());
+    }
+
+    const addHandler = (e) => {
+        isValid = true;
+        setErrors(validate(data));
         if (!isValid) {
             e.preventDefault();
         } else {
@@ -32,99 +128,8 @@ const AddProductForm=(props)=> {
         }
     }
 
-    const validate=() =>{
-        const { name, desc, category, price, quantity, imageLinks, videoLinks, pdfLink } = data;
-        const newErrors = {};
-        if (!name) {
-            isValid = false;
-            newErrors.name = "Please enter product name";
-        }
-        if (!desc) {
-            isValid = false;
-            newErrors.desc = "Please enter description for the product";
-        }
-        if (!category) {
-            isValid = false;
-            newErrors.category = "Please enter category of the product";
-        }
 
-        if (!price) {
-            isValid = false;
-            newErrors.price = "Please enter price for the product";
-        }
-
-        if (!quantity) {
-            isValid = false;
-            newErrors.quantity = "Please enter quantity of the product";
-        }
-
-        if (!imageLinks) {
-            isValid = false;
-            newErrors.imageLinks = "Please enter atleast one image link";
-        }
-
-        if (typeof price !== "undefined" && !newErrors.price) {
-
-            var pattern = new RegExp(/^[0-9\b]+$/);
-            if (!pattern.test(price)) {
-                isValid = false;
-                newErrors.price = "Please enter only digits";
-            }
-        }
-        if (typeof quantity !== "undefined" && !newErrors.quantity) {
-
-            var pat = new RegExp(/^[0-9\b]+$/);
-            if (!pat.test(quantity)) {
-                isValid = false;
-                newErrors.quantity = "Please enter only digits";
-            }
-        }
-
-        const validateImageLinks=(link)=> {
-            var pat = new RegExp(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/i);
-            if (!pat.test(link)) {
-                isValid = false;
-                newErrors.imageLinks = "Invalid Image Link";
-            }
-        }
-        
-        if (!newErrors.imageLinks) {
-            var imageLinksArray = imageLinks.split(',');
-            imageLinksArray = imageLinksArray.map(link => link.trim());
-            imageLinksArray.forEach(link => validateImageLinks(link));
-        }
-
-        const validateVideoLinks =(link)=> {
-            console.log(link);
-            pat = new RegExp(/^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w-]+\?v=|embed\/|v\/)?)([\w-]+)(\S+)?$/i);
-            if (!pat.test(link)) {
-                isValid = false;
-                newErrors.videoLinks = "Invalid Video Link";
-            }
-        }
-
-        if (videoLinks){
-            var videoLinksArray = videoLinks.split(',');
-            videoLinksArray = videoLinksArray.map(link => link.trim());
-            videoLinksArray.forEach(link => validateVideoLinks(link));
-        }
-            
-
-        
-
-        if (pdfLink) {
-            pat = new RegExp(/(http(s?):)([/|.|\w|\s|-])*\.(?:pdf)/i);
-            if (!pat.test(pdfLink)) {
-                isValid = false;
-                newErrors.pdfLink = "Invalid PDF Link";
-            }
-        }
-
-        return newErrors;
-
-    }
-
-    const handleChange=(value) =>{
+    const handleChange = (value) => {
         setCategoryValue(value);
         if (value)
             setData({ ...data, 'category': value.label });
