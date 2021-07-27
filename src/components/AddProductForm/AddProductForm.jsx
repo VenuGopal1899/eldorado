@@ -5,6 +5,7 @@ import Creatable from 'react-select/creatable';
 import { addProduct } from './../../services/ProductService/ProductService';
 import './AddProductForm.css';
 
+//Categories in the dropdown menu
 const categories = [
     { label: "Groceries", value: 1 },
     { label: "Books", value: 2 },
@@ -14,6 +15,8 @@ const categories = [
     { label: "Miscellaneous", value: 6 }
 ];
 var isValid = false;
+
+//Validation for price and quantity using regex
 const digitChecker = (value) => {
     var pat = new RegExp(/^[0-9\b]+$/);
     if (!pat.test(value)) {
@@ -22,10 +25,10 @@ const digitChecker = (value) => {
     }
 }
 
-
+//Validation for fields
 const validate = (data) => {
     const { name, desc, category, price, quantity, imageLinks, videoLinks, pdfLink } = data;
-    const newErrors = {};
+    const newErrors = {}; //Stores error statements for every field
     if (!name) {
         isValid = false;
         newErrors.name = "Please enter product name";
@@ -62,25 +65,18 @@ const validate = (data) => {
 
         newErrors.quantity = digitChecker(quantity);
     }
-
-
-
+    //Extracting image links from comma separated string and validating each link
     if (!newErrors.imageLinks) {
         var imageLinksArray = imageLinks.split(',');
         imageLinksArray = imageLinksArray.map(link => link.trim());
-        imageLinksArray.forEach(link => validateImageLinks(link,newErrors));
+        imageLinksArray.forEach(link => validateImageLinks(link, newErrors));
     }
-
-
-
+    //Extracting video links from comma separated string and validating each link
     if (videoLinks) {
         var videoLinksArray = videoLinks.split(',');
         videoLinksArray = videoLinksArray.map(link => link.trim());
-        videoLinksArray.forEach(link => validateVideoLinks(link,newErrors));
+        videoLinksArray.forEach(link => validateVideoLinks(link, newErrors));
     }
-
-
-
 
     if (pdfLink) {
         var pat = new RegExp(/(http(s?):)([/|.|\w|\s|-])*\.(?:pdf)/i);
@@ -93,15 +89,16 @@ const validate = (data) => {
     return newErrors;
 
 }
-
-const validateImageLinks = (link,newErrors) => {
+//Validation for image links using regex
+const validateImageLinks = (link, newErrors) => {
     var pat = new RegExp(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/i);
     if (!pat.test(link)) {
         isValid = false;
         newErrors.imageLinks = "Invalid Image Link";
     }
 }
-const validateVideoLinks = (link,newErrors) => {
+//Validation for video links using regex
+const validateVideoLinks = (link, newErrors) => {
     console.log(link);
     var pat = new RegExp(/^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w-]+\?v=|embed\/|v\/)?)([\w-]+)(\S+)?$/i);
     if (!pat.test(link)) {
@@ -109,15 +106,18 @@ const validateVideoLinks = (link,newErrors) => {
         newErrors.videoLinks = "Invalid Video Link";
     }
 }
+
+//Functional Component for add product form
 const AddProductForm = (props) => {
 
     const [data, setData] = useState({ name: "", desc: "", category: "", price: "", quantity: "", imageLinks: "", videoLinks: "", pdfLink: "" });
     const [errors, setErrors] = useState({});
     const [categoryValue, setCategoryValue] = useState('');
+    //handler for changes in fields
     const changeHandler = (ce) => {
         setData({ ...data, [ce.target.id]: ce.target.value });
     }
-
+    //handler for add product button
     const addHandler = (e) => {
         isValid = true;
         setErrors(validate(data));
@@ -127,8 +127,7 @@ const AddProductForm = (props) => {
             addProduct(data);
         }
     }
-
-
+    //handler for changes in category
     const handleChange = (value) => {
         setCategoryValue(value);
         if (value)
@@ -140,6 +139,7 @@ const AddProductForm = (props) => {
             <Form>
                 <Container className="formCenter">
                     <div>
+                    {/* Field for Product Name */}
                         <TextField
                             id="name"
                             name="Product Name"
@@ -148,6 +148,7 @@ const AddProductForm = (props) => {
                             isInvalid={!!errors.name}
                             error={errors.name}
                         />
+                        {/* Field for Product Description */}
                         <Form.Group className="mb-3 required">
                             <Form.Label className="control-label">Product Description</Form.Label>
                             <Form.Control
@@ -160,7 +161,7 @@ const AddProductForm = (props) => {
                             />
                             <Form.Control.Feedback type='invalid'>{errors.desc}</Form.Control.Feedback>
                         </Form.Group>
-
+                        {/* Field for Category */}
                         <Form.Group className="mb-3 required">
                             <Form.Label className="control-label">Category</Form.Label>
                             <Creatable
@@ -176,7 +177,7 @@ const AddProductForm = (props) => {
                             />
                             <Form.Control.Feedback type='invalid'>{errors.category}</Form.Control.Feedback>
                         </Form.Group>
-
+                        {/* Field for Price */}
                         <TextField
                             id="price"
                             name="Price"
@@ -185,7 +186,7 @@ const AddProductForm = (props) => {
                             isInvalid={!!errors.price}
                             error={errors.price}
                         />
-
+                        {/* Field for Quantity */}
                         <TextField
                             id="quantity"
                             name="Quantity"
@@ -194,7 +195,8 @@ const AddProductForm = (props) => {
                             isInvalid={!!errors.quantity}
                             error={errors.quantity}
                         />
-
+                        
+                        {/* Field for Image Links */}
                         <TextField
                             id="imageLinks"
                             name="Image Links"
@@ -203,7 +205,7 @@ const AddProductForm = (props) => {
                             isInvalid={!!errors.imageLinks}
                             error={errors.imageLinks}
                         />
-
+                        {/* Field for Video Links */}
                         <TextField
                             id="videoLinks"
                             name="Video Links"
@@ -212,6 +214,7 @@ const AddProductForm = (props) => {
                             isInvalid={!!errors.videoLinks}
                             error={errors.videoLinks}
                         />
+                        {/* Field for PDF Link */}
                         <TextField
                             name="PDF Link"
                             placeholder="Enter PDF Link"
@@ -225,7 +228,6 @@ const AddProductForm = (props) => {
                         </Button>
                     </div>
                 </Container>
-
             </Form>
         </div>
     );

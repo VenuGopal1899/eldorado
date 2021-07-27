@@ -1,0 +1,14 @@
+.thumbnail {
+    width: 400px;
+    height: 266px;
+    margin: 1% ;
+    border:1px solid black;
+    
+}
+.center{
+    margin: auto;
+}
+p {
+    text-align: center;
+   
+   }

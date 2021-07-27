@@ -13,6 +13,7 @@ import ResetPasswordPage from './pages/ResetPasswordPage/ResetPasswordPage';
 import AddProductPage from './pages/AddProductPage/AddProductPage';
 import AdminProductDetailsPage from './pages/AdminProductDetailsPage/AdminProductDetailsPage';
 import CustomerProductDetailsPage from './pages/CustomerProductDetailsPage/CustomerProductDetailsPage';
+import ProductListPage from './pages/ProductListPage/ProductListPage';
 
 
 ReactDOM.render(
@@ -25,6 +26,7 @@ ReactDOM.render(
         <Route path="/admin/addproduct" component={AddProductPage}/>
         <Route path="/admin/product/{prodid}" component={AdminProductDetailsPage}/>
         <Route path="/customer/product/{prodid}" component={CustomerProductDetailsPage}/>
+        <Route path="/customer/products" component={ProductListPage}/>
       </Switch>
     </Router>
   </React.StrictMode>,
